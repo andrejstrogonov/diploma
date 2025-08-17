@@ -13,9 +13,8 @@ import ru.skypro.homework.model.UserModel;
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
     @Mapping(target = "userName", source = "email")
-    RegisterUserModel toDto(User user );
-    UserModel toDo(User user);
-    @Mapping(target = "email", source = "registerUserModel.userName")
-    @Mapping(target="id",source = "registerUserModel.id")
-    User toModel(RegisterUserModel registerUserModel,UserModel userModel);
+    UserModel toDto(User user );
+    @Mapping(target = "email", source = "UserModel.userName")
+    @Mapping(target="id",source = "UserModel.id")
+    User toModel(UserModel UserModel);
 }

@@ -44,6 +44,12 @@ public interface CommentRepository extends JpaRepository<CommentModel, Integer> 
      */
     @Query(value = "SELECT * FROM comment_model WHERE ad_pk=?1", nativeQuery = true)
     List<CommentModel> listCommentModel(int pk);
-
+    /**
+     * Создаем SQL запрос для проведения корректировки комментария price по указанному pk
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE comment_model SET text=?1, created_at=?2 WHERE pk=?3", nativeQuery = true)
+    void updatingComment(String text,long createAt,int pk);
 }
 
