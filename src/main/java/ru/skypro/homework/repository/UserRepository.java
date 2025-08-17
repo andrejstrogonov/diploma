@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.skypro.homework.model.RegisterUserModel;
 import ru.skypro.homework.model.UserModel;
 
 
@@ -39,23 +38,7 @@ public interface UserRepository extends JpaRepository<UserModel,Integer> {
     @Query(value = "UPDATE user_model SET first_name=?1, last_name=?2, phone=?3 WHERE id=?4", nativeQuery = true)
     void updatingUserInformationAuthorised(String firstName,String lastName,String phone,int idRegister);
 
-    /**
-     * Создаем SQL запрос на добавление строки при проведении авторизации
-     */
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO user_model (id_register,first_name,last_name,phone)VALUES (?1,?2,?3,?4)", nativeQuery = true)
-    void saveRule(Integer idRegister,String firstName, String lastName, String phone);
-
-     /**
-     * Создаем SQL запрос для записи значений user_name и password в новую строку (используется при отсутствии
-     * информации в БД по авторизованному пользователю
-     */
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO register_user_model (user_name,password)VALUES (?1,?2)", nativeQuery = true)
-    void saveUserPassword(String userName,String password);
-    /**
+       /**
      * Создаем SQL запрос для проведения корректировки ссылки на avatar по указанному user_name
      */
     @Transactional
@@ -67,12 +50,4 @@ public interface UserRepository extends JpaRepository<UserModel,Integer> {
      */
     @Query(value = "SELECT * FROM user_model WHERE id= ?1", nativeQuery = true)
     UserModel userModelFindId(int id);
-    /**
-     * Создаем SQL запрос для поиска модели по указанному id
-     */
-    @Query(value = "SELECT * FROM user_model WHERE id= ?1", nativeQuery = true)
-    UserModel userModel(int id);
-
-       @Query(value = "SELECT register_id FROM user_model WHERE ppk= ?1", nativeQuery = true)
-    int informationAboutIdRegist(int ppk);
-}
+ }

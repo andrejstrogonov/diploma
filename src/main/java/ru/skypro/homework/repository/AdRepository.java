@@ -45,13 +45,7 @@ public interface AdRepository extends JpaRepository<AdModel,Integer> {
     @Query(value = "SELECT author FROM ad_model WHERE pk=?1", nativeQuery = true)
     int author(int pk);
 
-    /**
-     * Создаем SQL запрос для поиска модели по указанному pk
-     */
-    @Query(value = "SELECT * FROM ad_model WHERE pk=?1", nativeQuery = true)
-    AdModel getInformationAboutAdModel(int id);
-
-    /**
+        /**
      * Создаем SQL запрос для поиска ссылки на аватар по указанному pk
      */
     @Query(value = "SELECT image FROM ad_model WHERE pk=?1", nativeQuery = true)

@@ -83,7 +83,7 @@ public class CommentService {
             return ResponseEntity.status(403).build();
         }
         int author = adRepository.findAuthorToPk(adId);
-        UserModel userModel = userRepository.userModel(author);
+        UserModel userModel = userRepository.userModelFindId(author);
         long time = currentTimeMillis();
         commentRepository.updatingComment(createOrUpdateCommentMapper.toDto(createOrUpdateComment).getText(), time, commentId);
         CommentModel commentModel = commentRepository.commentModel(commentId);

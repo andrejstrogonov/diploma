@@ -61,7 +61,7 @@ public class AdService {
 
 
     public ExtendedAd getInformationAboutAd(int id) {
-        AdModel adModel = adRepository.getInformationAboutAdModel(id);
+        AdModel adModel = adRepository.findPkObject(id);
         System.err.println(adModel);
         UserModel userModel = userRepository.userModelFindId(adRepository.author(id));
         return extendedMapper.toDto(adModel, userModel);
@@ -83,8 +83,8 @@ public class AdService {
         System.err.println(revers);
         adRepository.updatingUserInformationAd(revers.getTitle(),
                 revers.getDescription(), revers.getPrice(), id);
-        UserModel userModel = userRepository.userModel(id);
-        AdModel adModelAbout = adRepository.getInformationAboutAdModel(id);
+        UserModel userModel = userRepository.userModelFindId(id);
+        AdModel adModelAbout = adRepository.findPkObject(id);
         return adMapper.toModel(adModelAbout, userModel);
     }
 
