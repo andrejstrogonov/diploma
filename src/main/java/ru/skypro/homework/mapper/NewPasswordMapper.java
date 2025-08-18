@@ -7,12 +7,14 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.NewPassword;
 import ru.skypro.homework.model.RegisterUserModel;
+import ru.skypro.homework.model.UserModel;
+
 @Component
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface NewPasswordMapper {
         NewPasswordMapper INSTANCE = Mappers.getMapper(NewPasswordMapper.class);
          @Mapping(target = "password", source = "currentPassword")
-        RegisterUserModel toDto(NewPassword newPassword );
+         UserModel toDto(NewPassword newPassword );
     @Mapping(target = "currentPassword", source = "password")
-        NewPassword toModel(RegisterUserModel userModel);
+        NewPassword toModel(UserModel userModel);
            }

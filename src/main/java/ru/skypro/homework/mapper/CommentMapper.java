@@ -22,10 +22,10 @@ import java.util.List;
 public interface CommentMapper {
     CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
           CommentModel toDto(Comment comment);
-    @Mapping(target="author",source="registerUserModel.id")
+    @Mapping(target="author",source="userModel.id")
     @Mapping(target="authorImage",source="userModel.image")
     @Mapping(target="authorFirstName",source="userModel.firstName")
-    Comment toModel(CommentModel commentModel, UserModel userModel, RegisterUserModel registerUserModel);
+    Comment toModel(CommentModel commentModel, UserModel userModel);
     default Comments adsToComments(List<Comment> comments){
         Comments comments1=new Comments();
         comments1.setCount(comments.size());

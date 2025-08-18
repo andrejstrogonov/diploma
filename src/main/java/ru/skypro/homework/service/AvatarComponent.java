@@ -2,11 +2,8 @@ package ru.skypro.homework.service;
 
 import jakarta.transaction.Transactional;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skypro.homework.repository.UserRepository;
-
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,14 +18,12 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Transactional
 @Component
 public class AvatarComponent {
-    private final UserRepository userRepository;
 
-    public AvatarComponent(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AvatarComponent() {
     }
 
-   public Path saveAvatar(String coversDir,String saveNameAvatar,MultipartFile image) throws IOException {
-         Path filePath = Path.of(coversDir, saveNameAvatar + "." + getExtension(Objects.requireNonNull(image.getOriginalFilename())));
+    public Path saveAvatar(String coversDir, String saveNameAvatar, MultipartFile image) throws IOException {
+        Path filePath = Path.of(coversDir, saveNameAvatar + "." + getExtension(Objects.requireNonNull(image.getOriginalFilename())));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try (InputStream is = image.getInputStream();
@@ -40,6 +35,7 @@ public class AvatarComponent {
         }
         return filePath;
     }
+
     private String getExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
@@ -58,6 +54,7 @@ public class AvatarComponent {
             return baos.toByteArray();
         }
     }
+
     public void delete(String filepath) throws IOException {
         Files.deleteIfExists(Path.of(filepath));
     }

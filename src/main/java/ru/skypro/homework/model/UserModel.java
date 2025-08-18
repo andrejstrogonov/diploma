@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import ru.skypro.homework.dto.Role;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +18,7 @@ import java.util.Objects;
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer ppk;
+    private Integer id;
     @Column(nullable = false, name = "first_name", length = 16)
     @Size(min = 2, max = 16)
     private String firstName;
@@ -30,9 +31,17 @@ public class UserModel {
     private String image;
     @OneToMany(mappedBy = "userModel")
     private List<AdModel> adModels;
-    @OneToOne
-    @JoinColumn(name = "id_register")
-    private RegisterUserModel registerUserModel;
+    @Column(nullable = false, name = "username", length = 32)
+    @Size(min = 4, max = 32)
+    private String userName;
+    @Column(length = 16)
+    @Size(min = 8, max = 16)
+    private String password;
+    @Size(min = 8, max = 16)
+    @Column(nullable = false, name = "new_password", length = 16)
+    private String NewPassword;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public UserModel() {
     }
@@ -42,15 +51,15 @@ public class UserModel {
         if (this == object) return true;
         if (!(object instanceof UserModel)) return false;
         UserModel userModel = (UserModel) object;
-        return Objects.equals(ppk, userModel.ppk);
+        return Objects.equals(id, userModel.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(ppk);
+        return Objects.hashCode(id);
     }
 
-       public @Size(min = 2, max = 16) String getFirstName() {
+    public @Size(min = 2, max = 16) String getFirstName() {
         return firstName;
     }
 
@@ -74,17 +83,17 @@ public class UserModel {
         this.phone = phone;
     }
 
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "ppk=" + ppk +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", image='" + image + '\'' +
-                ", adModels=" + adModels +
-                ", registerUserModel=" + registerUserModel +
-                '}';
+    public UserModel(Integer id, String firstName, String lastName, String phone, String image, List<AdModel> adModels, String userName, String password, String newPassword, Role role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.image = image;
+        this.adModels = adModels;
+        this.userName = userName;
+        this.password = password;
+        NewPassword = newPassword;
+        this.role = role;
     }
 }
 

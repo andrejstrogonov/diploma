@@ -9,6 +9,7 @@ import ru.skypro.homework.dto.Ad;
 import ru.skypro.homework.dto.Ads;
 import ru.skypro.homework.model.AdModel;
 import ru.skypro.homework.model.RegisterUserModel;
+import ru.skypro.homework.model.UserModel;
 
 import java.util.List;
 
@@ -17,8 +18,9 @@ import java.util.List;
 public interface AdMapper {
     AdMapper INSTANCE = Mappers.getMapper(AdMapper.class);
     AdModel toDto(Ad ad );
-    @Mapping(target="author",source="registerUserModel.id")
-    Ad toModel(AdModel adModel, RegisterUserModel registerUserModel);
+    @Mapping(target="author",source="userModel.id")
+    @Mapping(target="image",source="adModel.image")
+    Ad toModel(AdModel adModel, UserModel userModel);
     default Ads adsToAd(List<Ad> ad){
         Ads ads=new Ads();
         ads.setCount(ad.size());
@@ -26,7 +28,3 @@ public interface AdMapper {
         return ads;
     }
 }
-
-
-
-

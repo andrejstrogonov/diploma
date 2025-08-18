@@ -17,7 +17,7 @@ public interface RegisterMapper {
          RegisterMapper INSTANCE = Mappers.getMapper(RegisterMapper.class);
 UserModel userToDto(Register register);
         @Mapping(target = "userName", source = "username")
-        RegisterUserModel registerToDto(Register register);
-       @Mapping(target = "username", source="registerUserModel.userName")
-        Register toModel(RegisterUserModel registerUserModel,UserModel userModel);
+        UserModel registerToDto(Register register);
+       @Mapping(target = "username", source="userModel.userName")
+        Register toModel(UserModel userModel);
         }

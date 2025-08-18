@@ -18,7 +18,7 @@ public interface ExtendedAdMapper{
     @Mapping(target="pk",source="adModel.pk")
      @Mapping(target="authorFirstName",source="userModel.firstName")
      @Mapping(target="authorLastName",source="userModel.lastName")
-    @Mapping(target="email",source="registerUserModel.userName")
+    @Mapping(target="email",source="userModel.userName")
     @Mapping(target="image",source="adModel.image")
-    ExtendedAd toDto(AdModel adModel, UserModel userModel, RegisterUserModel registerUserModel);
+    ExtendedAd toDto(AdModel adModel, UserModel userModel);
 }
