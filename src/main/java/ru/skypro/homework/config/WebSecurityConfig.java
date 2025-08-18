@@ -51,7 +51,6 @@ public class WebSecurityConfig {
                             .build();
                             return new InMemoryUserDetailsManager(user);
         }
-
 /*
    @Bean
    public DataSource dataSource() {
