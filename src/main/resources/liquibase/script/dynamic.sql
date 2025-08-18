@@ -11,7 +11,7 @@
     last_name TEXT,
     phone TEXT,
     image TEXT,
-    enabled INT);
+    enabled BOOLEAN);
 
     -- changeset acycalov:2
     CREATE TABLE ad_model(

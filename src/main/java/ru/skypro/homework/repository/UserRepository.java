@@ -50,4 +50,12 @@ public interface UserRepository extends JpaRepository<UserModel,Integer> {
      */
     @Query(value = "SELECT * FROM user_model WHERE id= ?1", nativeQuery = true)
     UserModel userModelFindId(int id);
- }
+    /**
+     * Создаем SQL запрос для записи новой строки с данными в указанных колонках
+     **/
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO user_model (username,password,role)VALUES (?1,?2,?3)", nativeQuery = true)
+    void saveAdd(String name, String password, String role);
+
+}
