@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import ru.skypro.homework.model.UserModel;
 
@@ -57,5 +59,8 @@ public interface UserRepository extends JpaRepository<UserModel,Integer> {
     @Modifying
     @Query(value = "INSERT INTO user_model (username,password,role)VALUES (?1,?2,?3)", nativeQuery = true)
     void saveAdd(String name, String password, String role);
+    @Query(value="SELECT username,password,role FROM user_model WHERE username=?1",nativeQuery = true)
+    UserDetails findByUsername(String username);
+
 
 }
