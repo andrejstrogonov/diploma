@@ -19,21 +19,11 @@ public class MyUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
       //  PasswordEncoder passwordEncoder;
         UserDetails userDetail=userRepository.findByUsername(username);
-        /* if (userDetail==null) {
-            UserDetails user = User.builder()
-                     .password("password")
-                     .username("user@gmail.com")
-                     .roles("USER")
-                     .build());
-            userRepository.saveAdd(user.getUsername(),user.getPassword(),user.getAuthorities().toString());
-        }
-
-         */
-        return userDetail;
+             return userDetail;
     }
     public boolean userExists(String username){
         if(userRepository.findByUsername(username)==null){
-            return false;
+                    return false;
         }
         return true;
     }

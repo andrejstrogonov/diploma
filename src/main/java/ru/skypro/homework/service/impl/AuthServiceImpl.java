@@ -1,5 +1,6 @@
 package ru.skypro.homework.service.impl;
 
+import org.hibernate.tool.schema.internal.exec.GenerationTargetToStdout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,6 +54,7 @@ public class AuthServiceImpl implements AuthService {
                         .username(reversRegister.getUserName())
                         .roles(reversRegister.getRole().name())
                         .build());
+        System.err.println(userRoleAuthorised());
                          return true;
     }
 
@@ -67,13 +69,10 @@ public class AuthServiceImpl implements AuthService {
 
     public String userRoleAuthorised() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            System.err.println(userDetails.getAuthorities().toString());
-           return userDetails.getAuthorities().toString().toUpperCase();
-        }
-        return null;
-    }
+        if (authentication != null && authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+    return "ADMIN";
+           }return "USER";
+             }
     public String userPasswordAuthorised() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
