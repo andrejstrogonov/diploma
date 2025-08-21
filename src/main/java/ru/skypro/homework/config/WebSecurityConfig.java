@@ -12,9 +12,13 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import ru.skypro.homework.dto.Role;
+import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.impl.MyUserDetailService;
 
 
@@ -22,8 +26,8 @@ import ru.skypro.homework.service.impl.MyUserDetailService;
 @Configuration
 public class WebSecurityConfig {
     private final MyUserDetailService myUserDetailService;
-    //@Autowired
-    private CustomAuthenticationProvider customAuthenticationProvider;
+   //@Autowired
+   // UserRepository userRepository;
 
     public WebSecurityConfig(MyUserDetailService myUserDetailService) {
         this.myUserDetailService = myUserDetailService;
@@ -41,6 +45,19 @@ public class WebSecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
+        /*
+                if(userRepository.findString()==0){
+            UserDetails user =
+                    User.builder()
+                            .username("user@gmail.com")
+                            .password("password")
+                            .passwordEncoder(passwordEncoder()::encode)
+                            .roles(Role.USER.name())
+                            .build();
+userRepository.saveAdd("user@gmail.com",user.getPassword(),"USER");
+        }
+
+         */
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(myUserDetailService);
         provider.setPasswordEncoder(passwordEncoder());

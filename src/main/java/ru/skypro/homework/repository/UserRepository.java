@@ -61,6 +61,8 @@ public interface UserRepository extends JpaRepository<UserModel,Integer> {
     void saveAdd(String name, String password, String role);
     @Query(value="SELECT username,password,role FROM user_model WHERE username=?1",nativeQuery = true)
     UserDetails findByUsername(String username);
+    @Query(value="SELECT count(*)FROM user_model")
+    int findString();
 
 
 }
