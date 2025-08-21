@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import ru.skypro.homework.model.UserModel;
 
+import java.util.List;
+
 
 @Repository
 public interface UserRepository extends JpaRepository<UserModel,Integer> {
@@ -61,7 +63,7 @@ public interface UserRepository extends JpaRepository<UserModel,Integer> {
     void saveAdd(String name, String password, String role);
     @Query(value="SELECT username,password,role FROM user_model WHERE username=?1",nativeQuery = true)
     UserDetails findByUsername(String username);
-    @Query(value="SELECT count(*)FROM user_model")
+    @Query(value="SELECT count(*) FROM user_model",nativeQuery = true)
     int findString();
 
 
