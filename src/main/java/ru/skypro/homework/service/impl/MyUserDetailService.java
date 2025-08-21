@@ -1,6 +1,8 @@
 package ru.skypro.homework.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,6 +30,12 @@ public class MyUserDetailService implements UserDetailsService {
         return true;
     }
     public void createUser(UserDetails userDetails){
-        userRepository.saveAdd(userDetails.getUsername(),userDetails.getPassword(),userDetails.getAuthorities().toString());
+        userRepository.saveAdd(userDetails.getUsername(),userDetails.getPassword(),userRoleAuthorised());
+    }
+    private String userRoleAuthorised() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+            return "ADMIN";
+        }return "USER";
     }
 }
