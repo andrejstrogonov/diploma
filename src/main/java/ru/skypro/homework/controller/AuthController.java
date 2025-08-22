@@ -23,17 +23,14 @@ import ru.skypro.homework.model.UserModel;
 import ru.skypro.homework.service.AuthService;
 
 @Slf4j
-@CrossOrigin(value = "http://localhost:3000")
+
 @RestController
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
-    @Autowired
+        @Autowired
     LoginMapper loginMapper;
 
     @Tag(name = "Авторизация")
@@ -42,6 +39,7 @@ public class AuthController {
             @ApiResponse( description = "OK",responseCode = "200",content = { @Content(schema = @Schema()) }),
             @ApiResponse( description = "Unauthorized", responseCode = "401",content = { @Content(schema = @Schema()) })
     })
+    @CrossOrigin(value = "http://localhost:3000")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Login login) {
         RegisterUserModel reversLogin=loginMapper.toDto(login);
@@ -57,6 +55,7 @@ public class AuthController {
             @ApiResponse(description = "Created", responseCode = "201",content = { @Content(schema = @Schema()) }),
             @ApiResponse(description = "Bad Request", responseCode = "400",content = { @Content(schema = @Schema()) })
     })
+    @CrossOrigin(value = "http://localhost:3000")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Register register) {
          if (authService.register(register)) {

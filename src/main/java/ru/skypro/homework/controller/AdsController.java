@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,32 +17,24 @@ import ru.skypro.homework.dto.Ad;
 import ru.skypro.homework.dto.Ads;
 import ru.skypro.homework.dto.ExtendedAd;
 
-import ru.skypro.homework.model.AdModel;
 import ru.skypro.homework.service.AdService;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/ads")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @Tag(name = "Объявления")
 public class AdsController {
     private final AdService adService;
-
-    public AdsController(AdService adService) {
-        this.adService = adService;
-    }
-    //@Autowired
-    //CreateOrUpdateAdMapper createOrUpdateAdMapper;
 
     @Tag(name = "Объявления")
     @GetMapping()
     @Operation(summary = "Получение всех объявлений")
     @ApiResponse(description = "Ok", responseCode = "200", content =
             {@Content(schema = @Schema(implementation = Ads.class), mediaType = "application/json")})
-    public Optional<Ads> getAllAds() {
-        return Optional.of(adService.getAllService());
+    public Ads getAllAds() {
+        return (adService.getAllService());
     }
 
     @Tag(name = "Объявления")
@@ -84,10 +75,8 @@ public class AdsController {
             @ApiResponse(responseCode = "Not fount", description = "404", content = {@Content(schema = @Schema())})
     })
     public Ad updatingInformationAboutAd(@RequestParam("id") int id, @RequestBody CreateOrUpdateAd createOrUpdateAd) {
-//AdModel create=createOrUpdateAdMapper.toDto(createOrUpdateAd);
-        return adService.updatingInformationAboutAd(id, createOrUpdateAd);
-       // return adService.updatingInformationAboutAd(id, createOrUpdateAd);
-    }
+     return adService.updatingInformationAboutAd(id, createOrUpdateAd);
+      }
 
     @Tag(name = "Объявления")
     @GetMapping("/me")
