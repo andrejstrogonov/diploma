@@ -70,7 +70,7 @@ public class UserService {
             return ResponseEntity.status(403).build();
         }
         UserModel userModel = userRepository.informationAboutUserName(authService.usernameAuthorised(),
-                authService.userRoleAuthorised().replace("ROLE_", ""));
+                authService.userRoleAuthorised());
         Path filePath = avatarComponent.saveAvatar("avatar/user", userModel.getId().toString(), image);
         Integer avatarUserModel = avatarUserRepository.findUserAvatar(userModel.getId());
         if (avatarUserModel != null) {
