@@ -15,4 +15,5 @@ public class Ad {
  private String title;
  @Schema(description = "цена объявления")
  private int price;
+
 }
