@@ -8,7 +8,6 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.ExtendedAd;
 import ru.skypro.homework.model.AdModel;
-import ru.skypro.homework.model.RegisterUserModel;
 import ru.skypro.homework.model.UserModel;
 
 @Component
