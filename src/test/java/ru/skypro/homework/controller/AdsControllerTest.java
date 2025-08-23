@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -18,10 +17,8 @@ import ru.skypro.homework.dto.Ads;
 import ru.skypro.homework.dto.ExtendedAd;
 import ru.skypro.homework.service.AdService;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -123,51 +120,6 @@ public class AdsControllerTest {
                 .andExpect(status().is(401));
     }
 
-/*
-    @Test
-    @WithMockUser
-    public void UpdatingAdImageAuthorizedTest() throws Exception {
-                int id = 1;
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("image", "image.jpeg", MediaType.MULTIPART_FORM_DATA_VALUE,
-                "image".getBytes());
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("image", mockMultipartFile.getOriginalFilename());
-        jsonObject.put("type", mockMultipartFile.getContentType());
-        mockMvc.perform(MockMvcRequestBuilders.patch("/ads/{id}/image?id=" + id+"&image="+mockMultipartFile.getName(), "id","image")
-                       // .content("image=@"+mockMultipartFile.getOriginalFilename()+";type="+mockMultipartFile.getContentType())
-                        .content(jsonObject.toString())
-                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                        .accept(MediaType.ALL_VALUE))
-                .andDo(print())
-                .andExpect(status().is(200));
-    }
-
-
-    @Test
-    @WithMockUser
-    public void addingAdAuthorizedTest() throws Exception {
-        CreateOrUpdateAd createOrUpdateAd=new CreateOrUpdateAd();
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("image", "image.jpeg", MediaType.MULTIPART_FORM_DATA_VALUE,
-                "image".getBytes());
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("title","заголовок объявления");
-        jsonObject.put("description","описание объявления");
-        jsonObject.put("price", "1000000");
-
-
-        when(adService.addingAd(createOrUpdateAd, mockMultipartFile)).thenReturn(new Ad(12, "213213", 1,"dsfds",324));
-        mockMvc.perform(MockMvcRequestBuilders.post("/ads")
-                        .content(jsonObject.toString())
-                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                        .accept(MediaType.ALL_VALUE))
-                .andDo(print())
-                .andExpect(status().is(200));
-    }
-
-
-
- */
 
 }
 

@@ -5,7 +5,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.User;
-import ru.skypro.homework.model.RegisterUserModel;
 import ru.skypro.homework.model.UserModel;
 
 @Mapper(componentModel = "spring")
