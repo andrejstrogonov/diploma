@@ -7,26 +7,27 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skypro.homework.dto.CreateOrUpdateAd;
 import ru.skypro.homework.dto.Ad;
 import ru.skypro.homework.dto.Ads;
+import ru.skypro.homework.dto.CreateOrUpdateAd;
 import ru.skypro.homework.dto.ExtendedAd;
-
 import ru.skypro.homework.service.AdService;
 
 import java.io.IOException;
 
 @RestController
 @RequestMapping("/ads")
-@RequiredArgsConstructor
 @Tag(name = "Объявления")
 public class AdsController {
     private final AdService adService;
+
+    public AdsController(AdService adService) {
+        this.adService = adService;
+    }
 
     @Tag(name = "Объявления")
     @GetMapping()
@@ -75,8 +76,8 @@ public class AdsController {
             @ApiResponse(responseCode = "Not fount", description = "404", content = {@Content(schema = @Schema())})
     })
     public Ad updatingInformationAboutAd(@RequestParam("id") int id, @RequestBody CreateOrUpdateAd createOrUpdateAd) {
-     return adService.updatingInformationAboutAd(id, createOrUpdateAd);
-      }
+        return adService.updatingInformationAboutAd(id, createOrUpdateAd);
+    }
 
     @Tag(name = "Объявления")
     @GetMapping("/me")
@@ -101,21 +102,21 @@ public class AdsController {
             @ApiResponse(responseCode = "Not fount", description = "404", content = {@Content(schema = @Schema())})
     })
     public ResponseEntity<String> UpdatingAdImage(@RequestParam("id") int id, @RequestParam MultipartFile image) throws IOException {
-              return adService.UpdatingAdImage(id, image);
+        return adService.UpdatingAdImage(id, image);
     }
 
     @Tag(name = "Объявления")
-    @PostMapping(params = "parameters", consumes ={MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(params = "parameters", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "Добавление объявления")
-   @ApiResponses(value = {
-           @ApiResponse(responseCode = "Created", description = "201",
-                  content ={@Content(schema = @Schema(implementation = Ad.class), mediaType = "application/json")}),
-           @ApiResponse(responseCode = "Unauthorized", description = "401", content = {@Content(schema = @Schema())})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "Created", description = "201",
+                    content = {@Content(schema = @Schema(implementation = Ad.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "Unauthorized", description = "401", content = {@Content(schema = @Schema())})
     })
-       public ResponseEntity<Ad> addingAd(@RequestPart("parameters") CreateOrUpdateAd parameters,
-                                          @RequestParam("image") MultipartFile image) throws IOException {
-       // AdModel create=createOrUpdateAdMapper.toDto(parameters);
-                        return adService.addingAd( parameters, image);
+    public ResponseEntity<Ad> addingAd(@RequestPart("parameters") CreateOrUpdateAd parameters,
+                                       @RequestParam("image") MultipartFile image) throws IOException {
+        // AdModel create=createOrUpdateAdMapper.toDto(parameters);
+        return adService.addingAd(parameters, image);
 
     }
 }
