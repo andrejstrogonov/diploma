@@ -1,0 +1,24 @@
+@startuml CommentModel ER Diagram
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x
+
+table(CommentModel) {
+    primary_key(pk): Integer
+    text: String
+    createdAt: long
+    foreign_key(ad_pk): Integer
+}
+
+table(AdModel) {
+    primary_key(pk): Integer
+    price: Integer
+    title: String
+    description: String
+}
+
+' Relationship
+AdModel ||--o{ CommentModel : "0..*" has
+
+@enduml

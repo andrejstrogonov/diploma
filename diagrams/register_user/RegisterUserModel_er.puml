@@ -1,0 +1,27 @@
+@startuml RegisterUserModel ER Diagram
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x
+
+table(RegisterUserModel) {
+    primary_key(id): Integer
+    userName: String
+    password: String
+    NewPassword: String
+    role: Role
+}
+
+table(UserModel) {
+    primary_key(id): Integer
+    firstName: String
+    lastName: String
+    userName: String
+    phone: String
+    image: String
+}
+
+' Relationship
+RegisterUserModel ||--|| UserModel : "extends"
+
+@enduml

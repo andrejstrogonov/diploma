@@ -1,0 +1,60 @@
+@startuml ER Diagram
+
+' Enable database notation
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x
+
+' Entities
+table(UserModel) {
+    primary_key(id): Integer
+    firstName: String
+    lastName: String
+    userName: String
+    password: String
+    NewPassword: String
+    phone: String
+    image: String
+    role: Role
+}
+
+table(AdModel) {
+    primary_key(pk): Integer
+    price: Integer
+    title: String
+    description: String
+    foreign_key(user_id): Integer
+}
+
+table(CommentModel) {
+    primary_key(pk): Integer
+    text: String
+    createdAt: long
+    foreign_key(ad_pk): Integer
+}
+
+table(AvatarUserModel) {
+    primary_key(id): Integer
+    filePath: String
+    mediaType: String
+    fileSize: long
+    data: byte[]
+    foreign_key(user_id): Integer
+}
+
+table(AvatarAdModel) {
+    primary_key(id): Integer
+    filePath: String
+    mediaType: String
+    fileSize: long
+    data: byte[]
+    foreign_key(ad_pk): Integer
+}
+
+' Relationships
+UserModel ||--o{ AdModel : "1..*" has
+AdModel ||--o{ CommentModel : "0..*" has
+UserModel ||--o{ AvatarUserModel : "0..1" has
+AdModel ||--o{ AvatarAdModel : "0..1" has
+
+@enduml

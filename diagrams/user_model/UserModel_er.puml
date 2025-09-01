@@ -1,0 +1,37 @@
+@startuml UserModel ER Diagram
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x
+
+table(UserModel) {
+    primary_key(id): Integer
+    firstName: String
+    lastName: String
+    userName: String
+    password: String
+    NewPassword: String
+    phone: String
+    image: String
+    role: Role
+}
+
+table(AdModel) {
+    primary_key(pk): Integer
+    price: Integer
+    title: String
+    description: String
+    foreign_key(user_id): Integer
+}
+
+table(AvatarUserModel) {
+    primary_key(id): Integer
+    filePath: String
+    foreign_key(user_id): Integer
+}
+
+' Relationships
+UserModel ||--o{ AdModel : "1..*" has
+UserModel ||--o{ AvatarUserModel : "0..1" has
+
+@enduml

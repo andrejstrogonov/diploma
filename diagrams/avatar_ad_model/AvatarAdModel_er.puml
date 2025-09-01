@@ -1,0 +1,27 @@
+@startuml AvatarAdModel ER Diagram
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x
+
+table(AvatarAdModel) {
+    primary_key(id): Integer
+    filePath: String
+    mediaType: String
+    fileSize: long
+    data: byte[]
+    foreign_key(ad_pk): Integer
+}
+
+' Relationship with AdModel
+table(AdModel) {
+    primary_key(pk): Integer
+    price: Integer
+    title: String
+    description: String
+}
+
+' Relationship
+AdModel ||--o{ AvatarAdModel : "0..1" has
+
+@enduml

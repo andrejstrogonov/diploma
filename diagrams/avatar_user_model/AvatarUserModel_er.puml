@@ -1,0 +1,28 @@
+@startuml AvatarUserModel ER Diagram
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x
+
+table(AvatarUserModel) {
+    primary_key(id): Integer
+    filePath: String
+    mediaType: String
+    fileSize: long
+    data: byte[]
+    foreign_key(user_id): Integer
+}
+
+table(UserModel) {
+    primary_key(id): Integer
+    firstName: String
+    lastName: String
+    userName: String
+    phone: String
+    image: String
+}
+
+' Relationship
+UserModel ||--o{ AvatarUserModel : "0..1" has
+
+@enduml
