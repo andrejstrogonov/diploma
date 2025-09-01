@@ -3,13 +3,9 @@ package ru.skypro.homework.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Objects;
 
-@Getter
-@Setter
 @Table(name = "comment_model")
 @Entity
 public class CommentModel {
@@ -52,6 +48,34 @@ public class CommentModel {
                 ", createdAt=" + createdAt +
                 ", text='" + text + '\'' +
                 '}';
+    }
+
+    public Integer getPk() {
+        return this.pk;
+    }
+
+    public AdModel getAdModel() {
+        return this.adModel;
+    }
+
+    public long getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public void setPk(Integer pk) {
+        this.pk = pk;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }
 

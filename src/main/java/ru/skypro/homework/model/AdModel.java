@@ -3,17 +3,14 @@ package ru.skypro.homework.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 import java.util.Objects;
-@Getter
-@Setter
+
 @Entity
 @Table(name = "ad_model")
 public class AdModel {
-     @Id
+    @Id
     @GeneratedValue
     private Integer pk;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,8 +23,10 @@ public class AdModel {
     private int price;
     private String description;
     @OneToMany(mappedBy = "adModel")
-    private List<CommentModel>commentModels;
-    public AdModel(){}
+    private List<CommentModel> commentModels;
+
+    public AdModel() {
+    }
 
     @Size(max = 10000000)
     public int getPrice() {
@@ -54,6 +53,50 @@ public class AdModel {
     @JsonIgnore
     public void setUserModel(UserModel userModel) {
         this.userModel = userModel;
-  }
+    }
+
+    public Integer getPk() {
+        return this.pk;
+    }
+
+    public UserModel getUserModel() {
+        return this.userModel;
+    }
+
+    public String getImage() {
+        return this.image;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public List<CommentModel> getCommentModels() {
+        return this.commentModels;
+    }
+
+    public void setPk(Integer pk) {
+        this.pk = pk;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCommentModels(List<CommentModel> commentModels) {
+        this.commentModels = commentModels;
+    }
 }
 

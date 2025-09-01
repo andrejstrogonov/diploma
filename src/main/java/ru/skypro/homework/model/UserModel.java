@@ -4,15 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
 import ru.skypro.homework.dto.Role;
 
 import java.util.List;
 import java.util.Objects;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "user_model")
 public class UserModel {
@@ -93,6 +89,62 @@ public class UserModel {
         this.userName = userName;
         this.password = password;
         NewPassword = newPassword;
+        this.role = role;
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public String getImage() {
+        return this.image;
+    }
+
+    public List<AdModel> getAdModels() {
+        return this.adModels;
+    }
+
+    public @Size(min = 4, max = 32) String getUserName() {
+        return this.userName;
+    }
+
+    public @Size(min = 8, max = 16) String getPassword() {
+        return this.password;
+    }
+
+    public @Size(min = 8, max = 16) String getNewPassword() {
+        return this.NewPassword;
+    }
+
+    public Role getRole() {
+        return this.role;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setAdModels(List<AdModel> adModels) {
+        this.adModels = adModels;
+    }
+
+    public void setUserName(@Size(min = 4, max = 32) String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(@Size(min = 8, max = 16) String password) {
+        this.password = password;
+    }
+
+    public void setNewPassword(@Size(min = 8, max = 16) String NewPassword) {
+        this.NewPassword = NewPassword;
+    }
+
+    public void setRole(Role role) {
         this.role = role;
     }
 }

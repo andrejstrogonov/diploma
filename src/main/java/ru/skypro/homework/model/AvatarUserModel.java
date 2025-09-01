@@ -1,12 +1,9 @@
 package ru.skypro.homework.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Objects;
-@Setter
-@Getter
+
 @Table(name = "avatar_user")
 @Entity
 public class AvatarUserModel {
@@ -24,8 +21,10 @@ public class AvatarUserModel {
     private byte[] data;
     @OneToOne
     @JoinColumn(name = "user_id")
-       private UserModel userModel;
-public AvatarUserModel(){}
+    private UserModel userModel;
+
+    public AvatarUserModel() {
+    }
 
     @Override
     public boolean equals(Object object) {
@@ -51,4 +50,51 @@ public AvatarUserModel(){}
                 '}';
     }
 
+    public Integer getId() {
+        return this.id;
+    }
+
+    public String getFilePath() {
+        return this.filePath;
+    }
+
+    public String getMediaType() {
+        return this.mediaType;
+    }
+
+    public long getFileSize() {
+        return this.fileSize;
+    }
+
+    public byte[] getData() {
+        return this.data;
+    }
+
+    public UserModel getUserModel() {
+        return this.userModel;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+    }
 }

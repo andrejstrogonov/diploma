@@ -1,13 +1,8 @@
 package ru.skypro.homework.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Objects;
-
-@Setter
-@Getter
 
 @Table(name = "avatar_ad")
 @Entity
@@ -22,12 +17,14 @@ public class AvatarAdModel {
     @Column(nullable = false, name = "file_size")
     private long fileSize;
     @Lob
-    @Column( name = "data")
+    @Column(name = "data")
     private byte[] data;
     @OneToOne
     @JoinColumn(name = "ad_pk")
-     private AdModel adModel;
-public AvatarAdModel(){}
+    private AdModel adModel;
+
+    public AvatarAdModel() {
+    }
 
     @Override
     public boolean equals(Object object) {
@@ -51,5 +48,53 @@ public AvatarAdModel(){}
                 ", filePath='" + filePath + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public String getFilePath() {
+        return this.filePath;
+    }
+
+    public String getMediaType() {
+        return this.mediaType;
+    }
+
+    public long getFileSize() {
+        return this.fileSize;
+    }
+
+    public byte[] getData() {
+        return this.data;
+    }
+
+    public AdModel getAdModel() {
+        return this.adModel;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+    public void setAdModel(AdModel adModel) {
+        this.adModel = adModel;
     }
 }
