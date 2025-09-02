@@ -1,0 +1,103 @@
+@startuml Complete ER Diagram
+
+' Enable database notation
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x
+
+' ====== User Related Tables ======
+table(UserModel) {
+    primary_key(id): Integer
+    firstName: String
+    lastName: String
+    userName: String
+    password: String
+    NewPassword: String
+    phone: String
+    image: String
+    role: Role
+}
+
+table(RegisterUser) {
+    primary_key(id): Integer
+    username: String
+    password: String
+    firstName: String
+    lastName: String
+    phone: String
+    role: Role
+}
+
+' ====== Avatar Related Tables ======
+table(AvatarUserModel) {
+    primary_key(id): Integer
+    filePath: String
+    mediaType: String
+    fileSize: long
+    data: byte[]
+    foreign_key(user_id): Integer
+}
+
+table(AvatarAdModel) {
+    primary_key(id): Integer
+    filePath: String
+    mediaType: String
+    fileSize: long
+    data: byte[]
+    foreign_key(ad_pk): Integer
+}
+
+' ====== Ad Related Tables ======
+table(AdModel) {
+    primary_key(pk): Integer
+    price: Integer
+    title: String
+    description: String
+    foreign_key(user_id): Integer
+}
+
+' ====== Comment Related Tables ======
+table(CommentModel) {
+    primary_key(pk): Integer
+    text: String
+    createdAt: long
+    foreign_key(ad_pk): Integer
+}
+
+' ====== Relationships ======
+' User Relationships
+UserModel ||--o{ AdModel : "1..*" has
+UserModel ||--o{ AvatarUserModel : "0..1" has
+
+' Ad Relationships
+AdModel ||--o{ CommentModel : "0..*" has
+AdModel ||--o{ AvatarAdModel : "0..1" has
+
+' RegisterUser is a special case for registration
+RegisterUser ||--|| UserModel : "becomes"
+
+' Add notes for clarification
+note right of UserModel
+  - Represents application users
+  - Contains authentication data
+  - Has a role (USER/ADMIN)
+end note
+
+note right of AdModel
+  - Represents product listings
+  - Belongs to a user
+  - Can have one image
+end note
+
+note right of CommentModel
+  - Represents user comments on ads
+  - Belongs to an ad
+  - Has creation timestamp
+end note
+
+note right of RegisterUser
+  - Used during registration
+  - Validated before creating User
+end note
+
+@enduml

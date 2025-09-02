@@ -1,0 +1,130 @@
+@startuml Full Application Sequence Diagram
+
+title Full Application Sequence Diagram
+
+' Define participants
+actor User
+participant "AuthController" as AC
+participant "AdsController" as ADC
+participant "CommentsController" as CC
+participant "UsersController" as UC
+
+participant "AuthService" as AS
+participant "AdService" as ADS
+participant "CommentService" as CS
+participant "UserService" as US
+
+participant "LoginMapper" as LM
+
+database "Database" as DB
+participant "File Storage" as FS
+
+' ====== Authentication Flows ======
+== Registration ==
+User -> AC: POST /register (Register DTO)
+AC -> AS: register(Register DTO)
+AS -> DB: Check user existence
+DB --> AS: User not found
+AS -> DB: Create user
+DB --> AS: User created
+AS --> AC: true
+AC -> User: 201 Created
+
+== Login ==
+User -> AC: POST /login (Login DTO)
+AC -> LM: toDto(Login DTO)
+LM --> AC: RegisterUserModel
+AC -> AS: login(username, password)
+AS -> DB: Verify credentials
+DB --> AS: User data
+AS --> AC: true (if authenticated)
+AC -> User: 200 OK (with token)
+
+' ====== User Management Flows ======
+== Get User Info ==
+User -> UC: GET /users/me
+UC -> US: getInformationAboutUser()
+US -> DB: Get user data
+DB --> US: User data
+US --> UC: User DTO
+UC --> User: 200 OK, User DTO
+
+== Update User Info ==
+User -> UC: PATCH /users/me (UpdateUser)
+UC -> US: updatingUserInformation(updateUser)
+US -> DB: Update user data
+DB --> US: Update confirmation
+US --> UC: Updated UpdateUser DTO
+UC --> User: 200 OK, Updated DTO
+
+== Update User Avatar ==
+User -> UC: PATCH /users/me/image (image)
+UC -> US: updatingUsersAvatar(image)
+US -> FS: Save image
+FS --> US: Image URL
+US -> DB: Update user's avatar URL
+DB --> US: Update confirmation
+US --> UC: 200 OK
+UC --> User: 200 OK
+
+' ====== Ad Management Flows ======
+== Get All Ads ==
+User -> ADC: GET /ads
+ADC -> ADS: getAllService()
+ADS -> DB: Get all ads
+DB --> ADS: List of ads
+ADS --> ADC: Ads DTO
+ADC --> User: 200 OK, Ads DTO
+
+== Create Ad ==
+User -> ADC: POST /ads (parameters, image)
+ADC -> ADS: addingAd(parameters, image)
+ADS -> FS: Save image
+FS --> ADS: Image URL
+ADS -> DB: Create ad
+DB --> ADS: Created ad
+ADS --> ADC: 201 Created, Ad DTO
+ADC --> User: 201 Created, Ad DTO
+
+== Get Ad Details ==
+User -> ADC: GET /ads/{id}
+ADC -> ADS: getInformationAboutAd(id)
+ADS -> DB: Get ad by ID
+DB --> ADS: Ad data
+ADS --> ADC: ExtendedAd DTO
+ADC --> User: 200 OK, ExtendedAd DTO
+
+' ====== Comment Management Flows ======
+== Get Comments ==
+User -> CC: GET /ads/{id}/comments
+CC -> CS: getCommentsOnAd(id)
+CS -> DB: Get comments by ad ID
+DB --> CS: Comments list
+CS --> CC: Comments DTO
+CC --> User: 200 OK, Comments DTO
+
+== Add Comment ==
+User -> CC: POST /ads/{id}/comments (text)
+CC -> CS: addCommentToAd(id, text)
+CS -> DB: Create comment
+DB --> CS: Created comment
+CS --> CC: Comment DTO
+CC --> User: 200 OK, Comment DTO
+
+== Update Comment ==
+User -> CC: PATCH /ads/{adId}/comments/{commentId}
+CC -> CS: updatingComment(adId, commentId, updateData)
+CS -> DB: Update comment
+DB --> CS: Update confirmation
+CS --> CC: Updated Comment DTO
+CC --> User: 200 OK, Updated Comment DTO
+
+== Delete Comment ==
+User -> CC: DELETE /ads/{adId}/comments/{commentId}
+CC -> CS: deleteCommentToAdId(adId, commentId)
+CS -> DB: Delete comment
+DB --> CS: Deletion confirmation
+CS --> CC: 200 OK
+CC --> User: 200 OK
+
+@enduml
