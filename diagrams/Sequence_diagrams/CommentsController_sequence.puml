@@ -1,0 +1,42 @@
+@startuml CommentsController Sequence Diagram
+
+title CommentsController Sequence Diagram
+
+actor User
+participant "CommentsController" as CC
+participant "CommentService" as CS
+database Database
+
+== Get Comments for Ad ==
+User -> CC: GET /ads/{id}/comments
+CC -> CS: getCommentsOnAd(id)
+CS -> Database: Query comments by ad ID
+Database --> CS: Return comments list
+CS --> CC: Comments DTO
+CC --> User: 200 OK, Comments DTO
+
+== Add Comment ==
+User -> CC: POST /ads/{id}/comments (text)
+CC -> CS: addCommentToAd(id, text)
+CS -> Database: Create comment
+Database --> CS: Created comment
+CS --> CC: Comment DTO
+CC --> User: 200 OK, Comment DTO
+
+== Delete Comment ==
+User -> CC: DELETE /ads/{adId}/comments/{commentId}
+CC -> CS: deleteCommentToAdId(adId, commentId)
+CS -> Database: Delete comment
+Database --> CS: Deletion confirmation
+CS --> CC: 200 OK
+CC --> User: 200 OK
+
+== Update Comment ==
+User -> CC: PATCH /ads/{adId}/comments/{commentId} (CreateOrUpdateComment)
+CC -> CS: updatingComment(adId, commentId, createOrUpdateComment)
+CS -> Database: Update comment
+Database --> CS: Update confirmation
+CS --> CC: Updated Comment DTO
+CC --> User: 200 OK, Updated Comment DTO
+
+@enduml

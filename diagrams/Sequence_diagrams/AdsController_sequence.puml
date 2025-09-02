@@ -1,0 +1,70 @@
+@startuml AdsController Sequence Diagram
+
+title AdsController Sequence Diagram
+
+actor User
+participant "AdsController" as AC
+participant "AdService" as AS
+database Database
+
+== Получение всех объявлений ==
+User -> AC: GET /ads
+AC -> AS: getAllService()
+AS -> Database: Запрос всех объявлений
+Database --> AS: Возврат списка объявлений
+AS --> AC: Возврат DTO объявлений
+AC --> User: 200 OK, Ads DTO
+
+== Получение информации об объявлении ==
+User -> AC: GET /ads/{id}
+AC -> AS: getInformationAboutAd(id)
+AS -> Database: Поиск объявления по ID
+Database --> AS: Возврат данных объявления
+AS --> AC: ExtendedAd DTO
+AC --> User: 200 OK, ExtendedAd DTO
+
+== Удаление объявления ==
+User -> AC: DELETE /ads/{id}
+AC -> AS: deleteAd(id)
+AS -> Database: Удаление объявления по ID
+Database --> AS: Подтверждение удаления
+AS --> AC: 204 No Content
+AC --> User: 204 No Content
+
+== Обновление информации об объявлении ==
+User -> AC: PATCH /ads/{id}
+AC -> AS: updatingInformationAboutAd(id, createOrUpdateAd)
+AS -> Database: Обновление данных объявления
+Database --> AS: Подтверждение обновления
+AS --> AC: Обновлённый Ad DTO
+AC --> User: 200 OK, Ad DTO
+
+== Получение объявлений пользователя ==
+User -> AC: GET /ads/me
+AC -> AS: getAdsFromAuthorized()
+AS -> Database: Поиск объявлений пользователя
+Database --> AS: Список объявлений пользователя
+AS --> AC: Ads DTO
+AC --> User: 200 OK, Ads DTO
+
+== Обновление изображения объявления ==
+User -> AC: PATCH /ads/{id}/image (image)
+AC -> AS: UpdatingAdImage(id, image)
+AS -> FileStorage: Сохранение изображения
+FileStorage --> AS: URL изображения
+AS -> Database: Обновление ссылки на изображение
+Database --> AS: Подтверждение обновления
+AS --> AC: 200 OK, URL изображения
+AC --> User: 200 OK, URL изображения
+
+== Добавление объявления ==
+User -> AC: POST /ads (parameters, image)
+AC -> AS: addingAd(parameters, image)
+AS -> FileStorage: Сохранение изображения
+FileStorage --> AS: URL изображения
+AS -> Database: Создание записи объявления
+Database --> AS: Созданное объявление
+AS --> AC: 201 Created, Ad DTO
+AC --> User: 201 Created, Ad DTO
+
+@enduml

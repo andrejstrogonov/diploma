@@ -1,0 +1,45 @@
+@startuml UsersController Sequence Diagram
+
+title UsersController Sequence Diagram
+
+actor User
+participant "UsersController" as UC
+participant "UserService" as US
+database Database
+participant "File Storage" as FS
+
+== Update Password ==
+User -> UC: POST /users/set_password (NewPassword)
+UC -> US: passwordUpdates(newPassword)
+US -> Database: Verify and update password
+Database --> US: Update confirmation
+US --> UC: 200 OK
+UC --> User: 200 OK
+
+== Get User Info ==
+User -> UC: GET /users/me
+UC -> US: getInformationAboutUser()
+US -> Database: Get user data
+Database --> US: User data
+US --> UC: User DTO
+UC --> User: 200 OK, User DTO
+
+== Update User Info ==
+User -> UC: PATCH /users/me (UpdateUser)
+UC -> US: updatingUserInformation(updateUser)
+US -> Database: Update user data
+Database --> US: Update confirmation
+US --> UC: Updated UpdateUser DTO
+UC --> User: 200 OK, Updated UpdateUser DTO
+
+== Update User Avatar ==
+User -> UC: PATCH /users/me/image (image)
+UC -> US: updatingUsersAvatar(image)
+US -> FS: Save image
+FS --> US: Image URL
+US -> Database: Update user's avatar URL
+Database --> US: Update confirmation
+US --> UC: 200 OK
+UC --> User: 200 OK
+
+@enduml

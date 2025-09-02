@@ -1,0 +1,44 @@
+@startuml AuthController Sequence Diagram
+
+title AuthController Sequence Diagram
+
+actor User
+participant "AuthController" as AC
+participant "AuthService" as AS
+participant "LoginMapper" as LM
+participant Database
+
+== Авторизация пользователя ==
+User -> AC: POST /login (Login DTO)
+AC -> LM: toDto(Login DTO)
+LM --> AC: RegisterUserModel
+AC -> AS: login(username, password)
+AS -> Database: Проверка учетных данных
+Database --> AS: Данные пользователя или null
+
+alt Успешная аутентификация
+    AS --> AC: true
+    AC -> User: 200 OK
+else Неудачная аутентификация
+    AS --> AC: false
+    AC -> User: 401 Unauthorized
+end
+
+== Регистрация пользователя ==
+User -> AC: POST /register (Register DTO)
+AC -> AS: register(Register DTO)
+AS -> Database: Проверка существования пользователя
+
+alt Пользователь не существует
+    Database --> AS: Пользователь не найден
+    AS -> Database: Создание нового пользователя
+    Database --> AS: Пользователь создан
+    AS --> AC: true
+    AC -> User: 201 Created
+else Пользователь существует
+    Database --> AS: Пользователь найден
+    AS --> AC: false
+    AC -> User: 400 Bad Request
+end
+
+@enduml
