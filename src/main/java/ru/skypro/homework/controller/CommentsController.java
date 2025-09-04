@@ -33,7 +33,7 @@ public class CommentsController {
             @ApiResponse( description = "Unauthorized", responseCode = "401",content = { @Content(schema = @Schema()) }),
             @ApiResponse( description = "Not fount", responseCode ="404",content = { @Content(schema = @Schema()) })
     })
-    public ResponseEntity<Comments> getCommentsOnAd(@RequestParam("id")int id) {
+    public ResponseEntity<Comments> getCommentsOnAd(@PathVariable("id") int id) {
         return commentService.getCommentsOnAd(id);
     }
     @Tag(name = "Комментарии")
@@ -45,7 +45,7 @@ public class CommentsController {
             @ApiResponse( description = "Unauthorized", responseCode = "401",content = { @Content(schema = @Schema()) }),
             @ApiResponse( description = "Not fount", responseCode ="404",content = { @Content(schema = @Schema()) })
     })
-    public ResponseEntity<Comment> addCommentToAd(@RequestParam("ID продукта")int id, @RequestBody String text) {
+    public ResponseEntity<Comment> addCommentToAd(@PathVariable("id") int id, @RequestBody String text) {
         return commentService.addCommentToAd(id,text);
     }
      @Tag(name = "Комментарии")
@@ -57,8 +57,8 @@ public class CommentsController {
             @ApiResponse( description = "Forbidden", responseCode = "403",content = { @Content(schema = @Schema()) }),
             @ApiResponse( description = "Not fount", responseCode ="404",content = { @Content(schema = @Schema()) })
     })
-    public ResponseEntity<Void> deleteCommentToAdId(@RequestParam("ID продукта")int adId,int commentId) {
-        return commentService.deleteCommentToAdId(adId,commentId);
+    public ResponseEntity<Void> deleteCommentToAdId(@PathVariable("adId") int adId, @PathVariable("commentId") int commentId) {
+        return commentService.deleteCommentToAdId(adId, commentId);
     }
     @Tag(name = "Комментарии")
     @PatchMapping("/{adId}/comments/{commentId}")
@@ -70,9 +70,10 @@ public class CommentsController {
             @ApiResponse( description = "Forbidden", responseCode = "403",content = { @Content(schema = @Schema()) }),
             @ApiResponse( description = "Not fount", responseCode ="404",content = { @Content(schema = @Schema()) })
     })
-    public ResponseEntity<Comment> updatingComment(@RequestParam("adId")int adId,@RequestParam("commentId")int commentId,
+    public ResponseEntity<Comment> updatingComment(@PathVariable("adId") int adId,
+                                   @PathVariable("commentId") int commentId,
                                    @RequestBody CreateOrUpdateComment createOrUpdateComment) {
-        return commentService.updatingComment(adId,commentId,createOrUpdateComment);
+        return commentService.updatingComment(adId, commentId, createOrUpdateComment);
     }
    }
 

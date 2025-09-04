@@ -68,10 +68,10 @@ public class UsersController {
             @ApiResponse( description = "Ok",responseCode = "200",content = { @Content(schema = @Schema()) }),
             @ApiResponse( description = "Unauthorized", responseCode = "401",content = { @Content(schema = @Schema()) })
     })
-    public ResponseEntity<Void> updatingUsersAvatar( @RequestParam MultipartFile image)throws IOException {
+    public ResponseEntity<Void> updatingUsersAvatar(@RequestParam("image") MultipartFile image) throws IOException {
 
         return userService.updatingUsersAvatar(image);
     }
 
-        }
+}
 

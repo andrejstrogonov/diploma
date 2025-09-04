@@ -47,7 +47,7 @@ public class AdsController {
             @ApiResponse(description = "Unauthorized", responseCode = "401", content = {@Content(schema = @Schema())}),
             @ApiResponse(description = "Not fount", responseCode = "404", content = {@Content(schema = @Schema())})
     })
-    public ExtendedAd getInformationAboutAd(@RequestParam int id) {
+    public ExtendedAd getInformationAboutAd(@PathVariable int id) {
         return adService.getInformationAboutAd(id);
 
     }
@@ -61,7 +61,7 @@ public class AdsController {
             @ApiResponse(description = "Forbidden", responseCode = "403", content = {@Content(schema = @Schema())}),
             @ApiResponse(description = "Not fount", responseCode = "404", content = {@Content(schema = @Schema())})
     })
-    public ResponseEntity<Void> deleteAd(@RequestParam("ID продукта") int id) throws IOException {
+    public ResponseEntity<Void> deleteAd(@PathVariable int id) throws IOException {
         return adService.deleteAd(id);
     }
 
@@ -75,7 +75,7 @@ public class AdsController {
             @ApiResponse(responseCode = "Forbidden", description = "403", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "Not fount", description = "404", content = {@Content(schema = @Schema())})
     })
-    public Ad updatingInformationAboutAd(@RequestParam("id") int id, @RequestBody CreateOrUpdateAd createOrUpdateAd) {
+    public Ad updatingInformationAboutAd(@PathVariable int id, @RequestBody CreateOrUpdateAd createOrUpdateAd) {
         return adService.updatingInformationAboutAd(id, createOrUpdateAd);
     }
 
@@ -101,7 +101,7 @@ public class AdsController {
             @ApiResponse(responseCode = "Forbidden", description = "403", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "Not fount", description = "404", content = {@Content(schema = @Schema())})
     })
-    public ResponseEntity<String> UpdatingAdImage(@RequestParam("id") int id, @RequestParam MultipartFile image) throws IOException {
+    public ResponseEntity<String> UpdatingAdImage(@PathVariable int id, @RequestParam MultipartFile image) throws IOException {
         return adService.UpdatingAdImage(id, image);
     }
 
