@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Transactional
-public class IntegrationTest {
+public class IntegrationTests {
 
     @Autowired
     private MockMvc mockMvc;
